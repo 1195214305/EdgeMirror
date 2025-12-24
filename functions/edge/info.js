@@ -1,10 +1,19 @@
 /**
  * EdgeMirror - 边缘信息获取函数
- * 获取用户地理位置、边缘节点信息等
+ * 路径: /api/edge/info
  */
 
-export async function onRequest(context) {
-  const { request } = context;
+export default async function handler(request) {
+  // CORS 处理
+  if (request.method === 'OPTIONS') {
+    return new Response(null, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type'
+      }
+    });
+  }
 
   // 获取请求头中的地理信息
   const headers = request.headers;

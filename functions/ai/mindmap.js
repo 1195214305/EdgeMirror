@@ -1,31 +1,30 @@
 /**
  * EdgeMirror - AI 思维导图生成边缘函数
- * 使用通义千问 API 将画板内容转化为结构化思维导图
- * 支持流式响应，提供实时生成体验
+ * 路径: /api/ai/mindmap
  */
 
-// 通义千问 API 配置
 const QWEN_API_URL = 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions';
 const API_KEY = 'sk-54ae495d0e8e4dfb92607467bfcdf357';
 
-export async function onRequest(context) {
-  const { request, env } = context;
-
-  // CORS 头
-  const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-  };
-
+export default async function handler(request) {
+  // CORS 处理
   if (request.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
+    return new Response(null, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type'
+      }
+    });
   }
 
   if (request.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), {
       status: 405,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      }
     });
   }
 
@@ -36,7 +35,10 @@ export async function onRequest(context) {
     if (!elements || elements.length === 0) {
       return new Response(JSON.stringify({ error: 'No elements provided' }), {
         status: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        }
       });
     }
 
@@ -131,17 +133,20 @@ export async function onRequest(context) {
 
     return new Response(readable, {
       headers: {
-        ...corsHeaders,
         'Content-Type': 'text/plain; charset=utf-8',
         'Transfer-Encoding': 'chunked',
         'X-Edge-AI': 'streaming',
+        'Access-Control-Allow-Origin': '*',
       },
     });
   } catch (error) {
     console.error('MindMap generation error:', error);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      }
     });
   }
 }

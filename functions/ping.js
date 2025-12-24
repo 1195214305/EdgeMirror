@@ -1,11 +1,21 @@
 /**
  * EdgeMirror - Ping 延迟测量边缘函数
- * 用于测量客户端到边缘节点的网络延迟
+ * 路径: /api/ping
  */
 
-export async function onRequest(context) {
-  const { request } = context;
+export default async function handler(request) {
   const startTime = Date.now();
+
+  // CORS 处理
+  if (request.method === 'OPTIONS') {
+    return new Response(null, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type'
+      }
+    });
+  }
 
   // 获取边缘节点信息
   const edgeNode = request.headers.get('x-edge-node') ||
