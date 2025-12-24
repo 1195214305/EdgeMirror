@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d9488;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#115e59;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- 镜面/画布 -->
+  <rect x="15" y="20" width="70" height="50" rx="4" fill="#f5f5f5" stroke="url(#grad)" stroke-width="3"/>
+  <!-- 协作光点 -->
+  <circle cx="30" cy="35" r="4" fill="#14b8a6">
+    <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="55" cy="45" r="4" fill="#f59e0b">
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="70" cy="55" r="4" fill="#6366f1">
+    <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+  </circle>
+  <!-- 连接线 -->
+  <path d="M30 35 L55 45 L70 55" stroke="#d4d4d4" stroke-width="1.5" fill="none" stroke-dasharray="3,3">
+    <animate attributeName="stroke-dashoffset" values="0;6" dur="1s" repeatCount="indefinite"/>
+  </path>
+  <!-- 边缘节点 -->
+  <circle cx="50" cy="85" r="8" fill="url(#grad)"/>
+  <text x="50" y="88" text-anchor="middle" fill="white" font-size="8" font-weight="bold">E</text>
+</svg>
